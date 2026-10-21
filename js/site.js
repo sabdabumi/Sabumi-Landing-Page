@@ -60,20 +60,25 @@
     '.steps > *', '.sdgs > *', '.sdg-list > *', '.trio > *', '.offer > *', '.tiers > *', '.track > *',
     '.channels > *', '.kec > *', '.region-map', '.table-wrap', '.band blockquote', '.band .wrap > div',
     '.cta-band', '.composer', '.collab-grid > div', '.story > div', '.glossary > *', '.partners', '.facts', '.group-head', '.filters'];
-  var targets = [];
+  /* Collect first, measure once, then write: avoids forced reflow (layout thrashing) */
+  var cand = [], seen = new Set();
   groups.forEach(function(sel){
     document.querySelectorAll(sel).forEach(function(el){
-      if (el.closest('.hero') || el.classList.contains('rv')) return;
+      if (seen.has(el) || el.closest('.hero') || el.classList.contains('rv')) return;
+      seen.add(el);
       var sib = [].slice.call(el.parentNode.children).filter(function(c){ return c.matches(sel); });
-      el.style.setProperty('--i', Math.min(sib.indexOf(el), 6));
-      el.classList.add('rv'); targets.push(el);
+      cand.push({el:el, cls:'rv', i:Math.min(sib.indexOf(el), 6)});
     });
   });
-  document.querySelectorAll('.story figure img, .entry-fig img').forEach(function(el){ el.classList.add('rv-img'); targets.push(el); });
+  document.querySelectorAll('.story figure img, .entry-fig img').forEach(function(el){ cand.push({el:el, cls:'rv-img'}); });
+  var limit = window.innerHeight * 0.92;
+  var tops = cand.map(function(c){ return c.el.getBoundingClientRect().top; });
+  var targets = [];
   /* Anything already on screen at load is shown as is; only what scrolls into view animates */
-  targets = targets.filter(function(el){
-    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) { el.classList.add('in'); return false; }
-    return true;
+  cand.forEach(function(c, k){
+    if (c.i !== undefined) c.el.style.setProperty('--i', c.i);
+    c.el.classList.add(c.cls);
+    if (tops[k] < limit) c.el.classList.add('in'); else targets.push(c.el);
   });
   if (reduce || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('in'); });
