@@ -60,7 +60,7 @@
     '.steps > *', '.sdgs > *', '.sdg-list > *', '.trio > *', '.offer > *', '.tiers > *', '.track > *',
     '.channels > *', '.kec > *', '.region-map', '.table-wrap', '.band blockquote', '.band .wrap > div',
     '.cta-band', '.composer', '.collab-grid > div', '.story > div', '.glossary > *', '.partners', '.facts', '.group-head', '.filters'];
-  /* Collect first, measure once, then write: avoids forced reflow (layout thrashing) */
+  /* Collect the elements that fade in as they scroll into view */
   var cand = [], seen = new Set();
   groups.forEach(function(sel){
     document.querySelectorAll(sel).forEach(function(el){
@@ -71,15 +71,14 @@
     });
   });
   document.querySelectorAll('.story figure img, .entry-fig img').forEach(function(el){ cand.push({el:el, cls:'rv-img'}); });
-  var limit = window.innerHeight * 0.92;
-  var tops = cand.map(function(c){ return c.el.getBoundingClientRect().top; });
-  var targets = [];
-  /* Anything already on screen at load is shown as is; only what scrolls into view animates */
-  cand.forEach(function(c, k){
+  /* No measuring at startup (that forced a full layout before first paint).
+     The hero fills the first screen, so everything here starts below it and
+     the observer reveals it as it scrolls in. */
+  cand.forEach(function(c){
     if (c.i !== undefined) c.el.style.setProperty('--i', c.i);
     c.el.classList.add(c.cls);
-    if (tops[k] < limit) c.el.classList.add('in'); else targets.push(c.el);
   });
+  var targets = cand.map(function(c){ return c.el; });
   if (reduce || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('in'); });
   } else {
@@ -107,6 +106,8 @@
   });
 
   /* ---------- Contour lines ---------- */
+  /* Decorative only: drawn after load, when the browser is idle, so it never competes with first paint */
+  function drawContours(){
   document.querySelectorAll('svg.contour').forEach(function(svg){
     var W = 1600, H = +svg.dataset.h || 900;
     var cx = +svg.dataset.cx || 1180, cy = +svg.dataset.cy || 430, rings = +svg.dataset.rings || 14;
@@ -127,6 +128,10 @@
       svg.appendChild(path);
     }
   });
+  }
+  var idle = window.requestIdleCallback || function(fn){ return setTimeout(fn, 200); };
+  if (document.readyState === 'complete') idle(drawContours);
+  else window.addEventListener('load', function(){ idle(drawContours); });
 
   /* ---------- Region accordion + map ---------- */
   var kecButtons = [].slice.call(document.querySelectorAll('.kec button'));
