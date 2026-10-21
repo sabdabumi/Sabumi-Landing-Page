@@ -1,3 +1,3 @@
 # Sabumi-Landing-Page
 website sabda bumi ecologia
-Padalarang, Bandung Barat
+Padalarang, Bandung Barat 40533
