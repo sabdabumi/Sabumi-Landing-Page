@@ -165,13 +165,13 @@ section,[id]{scroll-margin-top:88px}
 .sec{padding:var(--s10) 0}
 .sec + .sec{padding-top:0}
 .sec.alt{background:var(--kertas);border-block:1px solid var(--garis)}
-.sec.alt + .sec,.band + .sec,.sec + .sec.alt,.sec + .sec.collab{padding-top:var(--s10)}
+.sec.alt + .sec,.sec.collab + .sec,.band + .sec,.sec + .sec.alt,.sec + .sec.collab{padding-top:var(--s10)}
 .sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6) var(--s8);align-items:end;margin-bottom:var(--s8)}
 .sec-head p{margin:0;color:var(--redup);max-width:52ch}
 .kicker{font:600 14px/1 var(--f-label);color:var(--kopi);margin-bottom:var(--s4);display:block}
 @media (max-width:900px){
   .sec{padding:var(--s9) 0}
-  .sec.alt + .sec,.band + .sec,.sec + .sec.alt,.sec + .sec.collab{padding-top:var(--s9)}
+  .sec.alt + .sec,.sec.collab + .sec,.band + .sec,.sec + .sec.alt,.sec + .sec.collab{padding-top:var(--s9)}
   .sec-head{grid-template-columns:1fr;margin-bottom:var(--s7)}
 }
 
@@ -546,7 +546,7 @@ picture{display:block}
 @media (max-width:760px){
   body{font-size:16.5px}
   .sec{padding:var(--s8) 0}
-  .sec.alt + .sec,.band + .sec,.sec + .sec.alt,.sec + .sec.collab{padding-top:var(--s8)}
+  .sec.alt + .sec,.sec.collab + .sec,.band + .sec,.sec + .sec.alt,.sec + .sec.collab{padding-top:var(--s8)}
   .sec-head{margin-bottom:var(--s6);gap:var(--s3)}
   h2{font-size:clamp(28px,8vw,36px)}
   .hero h1{font-size:clamp(40px,11.5vw,52px)}
