@@ -478,16 +478,19 @@ section,[id]{scroll-margin-top:88px}
 .req{color:var(--kopi)}
 
 /* ---------- Contact page ---------- */
-.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s7);align-items:start}
-.channels{display:grid;gap:var(--s4)}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s7);align-items:stretch}
+.channels{display:grid;gap:var(--s4);grid-auto-rows:1fr}
 .channel{padding:var(--s5);border:1px solid var(--garis);border-radius:var(--r-md);background:var(--kertas)}
 .channel h2{font:600 13px/1.3 var(--f-label);color:var(--redup);letter-spacing:0;margin-bottom:var(--s2)}
 .channel .value{font:700 20px/1.35 var(--f-display);margin:0 0 var(--s4);overflow-wrap:anywhere}
 .channel .row{display:flex;flex-wrap:wrap;gap:var(--s2)}
 .channel ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s2)}
-.channel ul a{font-weight:600;text-underline-offset:4px}
+.channel ul a{font-weight:600;text-underline-offset:4px;display:inline-flex;align-items:center;gap:var(--s3);min-height:44px}
+.channel ul svg{width:24px;height:24px;flex-shrink:0;color:var(--daun)}
+.channel ul a span{text-decoration:underline;text-underline-offset:4px}
+.channel ul a{text-decoration:none}
 .copied{font-size:14px;color:var(--daun);min-height:20px;margin:var(--s2) 0 0}
-@media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}.channels{grid-auto-rows:auto}}
 
 /* ---------- 404 ---------- */
 .lost{min-height:60vh;display:grid;align-content:center}
@@ -624,7 +627,7 @@ picture{display:block}
 .stage-word{grid-column:1 / span 7;margin:0;font:800 clamp(88px,15.5vw,236px)/.82 var(--f-display);letter-spacing:-.065em;color:#F4F1E6;white-space:nowrap;position:relative}
 .stage-word span{display:inline-block}
 .stage-i{position:relative}
-.stage-dot{position:absolute;left:.0313em;top:.064em;width:.1719em;height:.1719em;background:#9AD9AE}
+.stage-dot{position:absolute;left:.0313em;top:.064em;width:.1719em;height:.1719em;border-radius:50%;background:var(--daun)}
 .stage-side{grid-column:8 / span 5;display:flex;flex-direction:column;gap:var(--s4);padding-bottom:.6em;max-width:500px;justify-self:end;min-width:0}
 .hero-stage .stage-side h1{font:700 clamp(28px,3vw,44px)/1.1 var(--f-display);letter-spacing:-.02em;margin:0;color:#F4F1E6;text-wrap:balance}
 .stage-lede{margin:0;font-size:17px;line-height:1.55;color:rgba(244,241,230,.86)}
